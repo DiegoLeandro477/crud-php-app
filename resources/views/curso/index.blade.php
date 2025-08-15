@@ -39,9 +39,13 @@
                             <tr>
                                 <td>{{ $curso->name }}</td>
                                 <td>{{ $curso->description }}</td>
-                                <td>
-                                    <button class="btn btn-success">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                <td class="d-flex justify-content-start gap-2">
+                                    <a href="{{ route('curso.edit', $curso->id) }}" class="btn btn-success">Edit</a>
+                                    <form action="{{ route('curso.destroy', $curso->id)  }}" method="POST">
+                                        @csrf 
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

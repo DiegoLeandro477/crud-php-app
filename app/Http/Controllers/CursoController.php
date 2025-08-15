@@ -54,16 +54,25 @@ class CursoController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Curso $curso)
-    {
-        //
+    {   
+        return view('curso.update', compact('curso'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Curso $curso)
+    public function update(CursoRequest $request, Curso $curso)
     {
-        //
+        $cursoAtualizado = $curso->update([
+            'name'=> $request->name,
+            'description'=> $request->description,
+        ]);
+
+        if ($cursoAtualizado){
+            return redirect()->route('curso.index')->with('success','Curso atualizado com Sucesso');
+        } else {
+            return redirect()->route('curso.index')->with('error','Não foi possível atualizar os dados da eletiva');
+        }
     }
 
     /**
@@ -71,6 +80,13 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
-        //
+        $curso->delete();
+
+
+        if ($curso){
+            return redirect()->route('curso.index')->with('success','Curso deletado com Sucesso');
+        } else {
+            return redirect()->route('curso.index')->with('error','Não foi possível deletar a eletiva');
+        }
     }
 }
